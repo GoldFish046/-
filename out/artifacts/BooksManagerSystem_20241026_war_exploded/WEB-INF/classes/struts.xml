@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    <constant name="struts.multipart.maxSize" value="20971520"/>
+    <!--全局配置包-->
+    <package name="globalPackage" extends="struts-default,json-default">
+        <!--全局结果-->
+        <global-results>
+            <result name="success" type="json">
+                <param name="root">result</param>
+            </result>
+            <result name="input" type="json">
+                <param name="root">result</param>
+            </result>
+            <result name="login" type="json">
+                <param name="root">result</param>
+            </result>
+            <result name="error">../error.jsp</result>
+        </global-results>
+        <!--全局异常处理-->
+        <global-exception-mappings>
+            <exception-mapping exception="NullPointerException" result="input"/>
+        </global-exception-mappings>
+        <!--拦截器设置-->
+    </package>
+    <!--书籍相关action-->
+    <package name="book" extends="globalPackage" namespace="/book">
+        <!--获取所有书籍信息-->
+        <action name="getAllBook" class="action.BookAction" method="getAllBook"/>
+        <!--获取所有可借阅书籍信息-->
+        <action name="getAllAvaBook" class="action.BookAction" method="getAllAvaBook"/>
+        <!--删除书籍-->
+        <action name="deleteBook" class="action.BookAction" method="deleteBook"/>
+        <!--录入新书信息-->
+        <action name="insertNewBook" class="action.BookAction" method="insertNewBook"/>
+        <action name="updateBook" class="action.BookAction" method="updateBook"/>
+    </package>
+    <!--借阅相关action-->
+    <package name="borrow" extends="globalPackage" namespace="/borrow">
+        <!--获取所有借阅信息-->
+        <action name="getAllBorrow" class="action.BorrowAction" method="getAllBorrow"/>
+        <!--获取所有该用户借阅的书籍信息-->
+        <action name="getAllMyBorrow" class="action.BorrowAction" method="getAllMyBorrow"/>
+        <!--借阅新书籍-->
+        <action name="borrowNewBook" class="action.BorrowAction" method="borrowNewBook"/>
+        <!--归还书籍-->
+        <action name="returnBook" class="action.BorrowAction" method="returnBook"/>
+        <action name="updateBook" class="action.BookAction" method="updateBook"/>
+    </package>
+    <!--读者相关action-->
+    <package name="reader" extends="globalPackage" namespace="/reader">
+        <!--获取所有读者信息-->
+        <action name="getAllReader" class="action.ReaderAction" method="getAllReader"/>
+        <action name="getReaderByAccount" class="action.ReaderAction" method="getReaderByAccount"/>
+        <action name="deleteReaderByAccount" class="action.ReaderAction" method="deleteReaderByAccount"/>
+        <action name="updataReader" class="action.ReaderAction" method="updataReader"/>
+    </package>
+    <!--用户相关action-->
+    <package name="user" extends="globalPackage" namespace="/user">
+        <!--获取所有用户信息-->
+        <action name="getAllUser" class="action.UserAction" method="getAllUser"/>
+        <!--用户注册-->
+        <action name="register" class="action.UserAction" method="register"/>
+        <!--用户登录-->
+        <action name="login" class="action.UserAction" method="login"/>
+    </package>
+    <package name="file" extends="struts-default,json-default" namespace="/file">
+        <interceptors>
+            <interceptor name="getFlag" class="interceptor.DownloadInterceptor"/>
+        </interceptors>
+        <action name="download_*" class="action.DownloadAction" method="download">
+            <result name="success" type="stream">
+                <param name="contentType">image/png</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;</param>
+            </result>
+            <interceptor-ref name="getFlag"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+        <action name="upload" class="action.UploadAction" method="fileupload">
+            <result name="success" type="json">
+                <param name="root">result</param>
+            </result>
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.allowedExtensionSet">*</param>
+            </interceptor-ref>
+        </action>
+    </package>
+</struts>

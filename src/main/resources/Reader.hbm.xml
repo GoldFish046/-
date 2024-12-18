@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="hibernateEntity.Reader" table="reader" schema="booksmanagersystem">
+        <id name="account" column="account"/>
+        <property name="name" column="name"/>
+        <property name="phone" column="phone"/>
+        <property name="eMail" column="email"/>
+        <property name="type" column="type"/>
+        <property name="flag" column="flag"/>
+    </class>
+</hibernate-mapping>

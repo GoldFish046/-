@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="hibernateEntity.Book" table="book" schema="booksmanagersystem">
+        <id name="index" column="index"/>
+        <property name="name" column="name"/>
+        <property name="author" column="author"/>
+        <property name="pubhos" column="pubhos"/>
+        <property name="summary" column="summary"/>
+        <property name="flag" column="flag"/>
+        <property name="price" column="price"/>
+    </class>
+</hibernate-mapping>
